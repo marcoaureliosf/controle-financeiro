@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle Financeiro</title>
+  </head>
+
+  <body>
+    <!-- INTERFACE HTML -->
+
+    <h1>$ Controle Financeiro $</h1>
+
+    <!-- RESULTADO TOTAL DOS CÁLCULOS -->
+    <h2>Total R$:</h2>
+    <h3 id="total">0</h3>
+
+    <!-- ENTRADA DE DADOS DA DESCRIÇÃO DA TRANSAÇÃO -->
+    <label for="transacao">Transação:</label>
+    <input id="transacao" type="text" placeholder="Descreva a transação" />
+
+    <br />
+    <br />
+
+    <!-- ENTRADA DE DADOS DO VALOR DA TRANSAÇÃO -->
+    <label for="valor">Valor R$:</label>
+    <input id="valor" value="0" type="number" />
+
+    <br />
+    <br />
+
+    <!-- BOTÕES QUE INDICAM O TIPO DE MOVIMENTAÇÃO ENTRADA/SAÍDA -->
+    <button onclick="adicionaLinha('tbl', 'entrada')">Entrada</button>
+    <button onclick="adicionaLinha('tbl', 'saida')">Saída</button>
+
+    <br />
+    <br />
+
+    <!-- TABELA QUE EXIBE O HISTÓRICO DAS TRANSAÇÕES -->
+    <table id="tbl" border="1">
+      <tr>
+        <td>Descrição</td>
+        <td>Valor</td>
+      </tr>
+    </table>
+  </body>
+
+  <script>
+    // CÓDIGOS JAVASCRIPT
+
+    // ARMAZENA O RESULTADO TOTAL
+    var total = 0;
+
+    // FUNÇÃO QUE MANIPULA OS DADOS INSERIDOS DO USUÁRIO
+    function adicionaLinha(idTabela, formato) {
+      var valorTransacao = document.getElementById('valor').value;
+      var descricaoTransacao = document.getElementById('transacao').value;
+
+      var tabela = document.getElementById(idTabela);
+      var numeroLinhas = tabela.rows.length;
+      var linha = tabela.insertRow(numeroLinhas);
+      var celula1 = linha.insertCell(0);
+      var celula2 = linha.insertCell(1);
+
+      celula1.innerHTML = descricaoTransacao;
+
+      // CONDICIONAIS DE ACORDO COM O TIPO DE TRANSAÇÃO
+      if (formato === 'entrada') {
+        celula2.innerHTML = '+ ' + valorTransacao;
+        total += parseFloat(valorTransacao);
+        document.getElementById('total').innerHTML = total;
+      }
+
+      if (formato === 'saida') {
+        celula2.innerHTML = '- ' + valorTransacao;
+        total -= parseFloat(valorTransacao);
+        document.getElementById('total').innerHTML = total;
+      }
+    }
+  </script>
+</html>
